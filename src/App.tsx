@@ -1,4 +1,3 @@
-// import SharedWorkerExample from "./components/SharedWorker";
 import { useState } from "react";
 import WorkerExample from "./components/WorkerExample";
 
@@ -11,7 +10,6 @@ function App() {
     <div>
       <button onClick={toggle}>toggle</button>
       {show && <WorkerExample />}
-      {/* <SharedWorkerExample /> */}
     </div>
   );
 }
