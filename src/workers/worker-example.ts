@@ -1,12 +1,19 @@
-self.onmessage = (event) => {
-  let result;
+type MessageData = {
+  type: string;
+};
+
+self.onmessage = (event: MessageEvent<string>) => {
   const { data } = event;
 
+  const response = JSON.parse(data);
+
   setTimeout(() => {
-    if (data) {
-      result = data * Math.random();
+    if (typeof response === "object") {
+      const obj: MessageData = {
+        type: `${response?.type} - ${Math.floor(Math.random() * 100)}`,
+      };
+
+      postMessage(JSON.stringify(obj));
     }
-    result = Math.random();
-    postMessage(result);
-  }, 2000);
+  }, 1500);
 };

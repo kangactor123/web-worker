@@ -1,21 +1,22 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
-type Props = {
+type Props<T> = {
   url: string;
+  initialData?: T;
 };
 
 type Result<T> = {
   message: T | null;
   loading: boolean;
-  sendMessage: (message?: T) => void;
+  sendMessage: (message?: string) => void;
 };
 
-function useWebWorker<T>({ url }: Props): Result<T> {
+function useWebWorker<T>({ url, initialData }: Props<T>): Result<T> {
   const worker = useRef<Worker | null>(null);
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState<T | null>(null);
+  const [message, setMessage] = useState<T | null>(initialData ?? null);
 
-  const sendMessage = useCallback((message?: T) => {
+  const sendMessage = useCallback((message?: string) => {
     if (worker.current) {
       setLoading(true);
       worker.current.postMessage(message);
@@ -25,9 +26,10 @@ function useWebWorker<T>({ url }: Props): Result<T> {
   useEffect(() => {
     worker.current = new Worker(new URL(url, import.meta.url));
 
-    worker.current.onmessage = (event: MessageEvent<T>) => {
+    worker.current.onmessage = (event: MessageEvent<string>) => {
+      const messageData = JSON.parse(event.data);
       setLoading(false);
-      setMessage(event.data);
+      setMessage(messageData);
     };
 
     return () => {
