@@ -12,14 +12,9 @@ wss.on("connection", (ws) => {
     ws.send(`Server: Received your message - ${message}`);
   });
 
-  // 일정 시간마다 클라이언트로 메시지 전송
-  const intervalId = setInterval(() => {
-    ws.send("Server: Hello from server!");
-  }, 5000);
-
   // 연결이 닫혔을 때
   ws.on("close", () => {
-    clearInterval(intervalId);
+    // clearInterval(intervalId);
     console.log("Client disconnected");
   });
 });
