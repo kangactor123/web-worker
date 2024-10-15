@@ -1,5 +1,6 @@
 import { useState } from "react";
-import WorkerExample from "./components/WorkerExample";
+// import WorkerExample from "./components/WorkerExample";
+import WebSocket from "./components/WebSocketExample";
 
 function App() {
   const [show, setShow] = useState(true);
@@ -8,8 +9,9 @@ function App() {
   };
   return (
     <div>
-      <button onClick={toggle}>toggle</button>
-      {show && <WorkerExample />}
+      {/* <button onClick={toggle}>toggle</button> */}
+      {/* {show && <WorkerExample />} */}
+      <WebSocket />
     </div>
   );
 }
