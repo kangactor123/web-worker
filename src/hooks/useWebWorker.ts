@@ -27,7 +27,15 @@ function useWebWorker<T>({ url, initialData }: Props<T>): Result<T> {
     worker.current = new Worker(new URL(url, import.meta.url));
 
     worker.current.onmessage = (event: MessageEvent<string>) => {
-      const messageData = JSON.parse(event.data);
+      let messageData = null;
+      const { data } = event;
+
+      try {
+        messageData = JSON.parse(data);
+      } catch (error) {
+        messageData = data;
+      }
+
       setLoading(false);
       setMessage(messageData);
     };

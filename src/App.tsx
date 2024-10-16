@@ -1,7 +1,7 @@
 import { useState } from "react";
 import WorkerExample from "./components/WorkerExample";
 
-import WebSocket from "./components/WebSocketExample";
+// import WebSocket from "./components/WebSocketExample";
 
 function App() {
   const [show, setShow] = useState(true);
