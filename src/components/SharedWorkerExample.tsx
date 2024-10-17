@@ -1,24 +1,14 @@
 import { useEffect, useMemo, useState } from "react";
-import useWebWorker from "../hooks/useWebWorker";
+import { Alarm } from "../types/alarm";
+import { SocketData } from "../types/socket-data";
+import useSharedWorker from "../hooks/useSharedWorker";
 
-const socketWorkerPath = "../workers/socket-worker.ts";
+const sharedWorkerPath = "../workers/shared-worker.ts";
 
-type Alarm = {
-  id: string;
-  name: string;
-  price: number;
-  updatedAt: string;
-};
-
-type SocketData = {
-  type: "MESSAGE" | "DATA";
-  data: unknown;
-};
-
-const WorkerExample = () => {
+const SharedWorkerExample = () => {
   const [alarmList, setAlarmList] = useState<Alarm[]>([]);
-  const { message, loading, sendMessage } = useWebWorker<SocketData>({
-    url: socketWorkerPath,
+  const { message, loading, sendMessage } = useSharedWorker<SocketData>({
+    url: sharedWorkerPath,
   });
 
   const serverMessage: string | null = useMemo(() => {
@@ -39,12 +29,12 @@ const WorkerExample = () => {
   }, [message]);
 
   const handleClick = () => {
-    sendMessage("알림 생성하기");
+    sendMessage(`알림 생성하기: ${Date.now()}`);
   };
 
   return (
     <div>
-      <h1>Web Worker</h1>
+      <h1>Shared Worker with Web Socket</h1>
       <h3>서버메세지</h3>
       <p>{serverMessage ?? "서버에서 보낸 메세지가 존재하지 않습니다."}</p>
       <button onClick={handleClick}>알람 보내기</button>
@@ -67,4 +57,4 @@ const WorkerExample = () => {
   );
 };
 
-export default WorkerExample;
+export default SharedWorkerExample;
