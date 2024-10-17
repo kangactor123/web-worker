@@ -15,22 +15,7 @@ const wss = new WebSocket.Server({ port: 8080 });
 wss.on("connection", (ws) => {
   console.log("Client connected. Connected Clients: ", wss.clients.size);
 
-  ws.on("message", (message) => {
-    console.log(`Received: ${message}`);
-    ws.send(
-      JSON.stringify({
-        type: "MESSAGE",
-        data: `Server: Received your message - ${message}`,
-      })
-    );
-  });
-
-  // 연결이 닫혔을 때
-  ws.on("close", () => {
-    console.log("Client disconnected");
-  });
-
-  setInterval(() => {
+  const intervalHandler = () => {
     const randomIndex = Math.floor(Math.random() * 7);
     const alarm = {
       id: Date.now(),
@@ -46,7 +31,33 @@ wss.on("connection", (ws) => {
         data: alarm,
       })
     );
-  }, 8000);
+  };
+  const intervalId = setInterval(intervalHandler, 8000);
+
+  ws.on("message", (message) => {
+    console.log(`Received: ${message}`);
+    let serverMessage = "";
+
+    if (message === "PING") {
+      serverMessage = JSON.stringify({
+        type: "MESSAGE",
+        data: "PONG",
+      });
+    } else {
+      serverMessage = JSON.stringify({
+        type: "MESSAGE",
+        data: `Server: Received your message - ${message}`,
+      });
+    }
+
+    ws.send(serverMessage);
+  });
+
+  // 연결이 닫혔을 때
+  ws.on("close", () => {
+    console.log("Client disconnected");
+    clearInterval(intervalId);
+  });
 });
 
 console.log("WebSocket server running on ws://localhost:8080");
