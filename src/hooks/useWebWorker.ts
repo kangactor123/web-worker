@@ -53,16 +53,6 @@ function useWebWorker<T>({ url, initialData }: Props<T>): Result<T> {
     };
   }, [url]);
 
-  // reload 시 socket을 닫습니다.
-  useEffect(() => {
-    const eventHandler = () => {
-      sendMessage("CLOSE_SOCKET");
-      terminateWorker();
-    };
-    window.addEventListener("beforeunload", eventHandler);
-    return () => window.removeEventListener("beforeunload", eventHandler);
-  }, []);
-
   return {
     message,
     loading,

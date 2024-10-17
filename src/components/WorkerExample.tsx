@@ -32,7 +32,7 @@ const WorkerExample = () => {
   }, [message]);
 
   const handleClick = () => {
-    sendMessage("알림 생성하기");
+    sendMessage("알림 요청");
   };
 
   useEffect(() => {

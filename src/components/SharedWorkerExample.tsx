@@ -3,6 +3,8 @@ import { Alarm } from "../types/alarm";
 import { SocketData } from "../types/socket-data";
 import useSharedWorker from "../hooks/useSharedWorker";
 
+import dayjs from "dayjs";
+
 const sharedWorkerPath = "../workers/shared-worker.ts";
 
 const SharedWorkerExample = () => {
@@ -29,7 +31,7 @@ const SharedWorkerExample = () => {
   }, [message]);
 
   const handleClick = () => {
-    sendMessage(`알림 생성하기: ${Date.now()}`);
+    sendMessage(`알림 요청: ${Date.now()}`);
   };
 
   return (
@@ -47,8 +49,8 @@ const SharedWorkerExample = () => {
           {alarmList.map((alarm) => (
             <li key={alarm.id}>
               <h5>{alarm.name}</h5>
-              <div>{alarm.price}</div>
-              <div>{alarm.updatedAt}</div>
+              <div>{alarm.price.toLocaleString()}원</div>
+              <div>{dayjs(alarm.updatedAt).format("YYYY년 MM월 DD일")}</div>
             </li>
           ))}
         </ul>
