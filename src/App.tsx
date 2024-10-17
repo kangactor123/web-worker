@@ -3,6 +3,8 @@ import WorkerExample from "./components/WorkerExample";
 
 // import WebSocket from "./components/WebSocketExample";
 
+import SharedWorkerExample from "./components/SharedWorkerExample";
+
 function App() {
   const [show, setShow] = useState(true);
   const toggle = () => {
@@ -10,9 +12,10 @@ function App() {
   };
   return (
     <div>
-      <button onClick={toggle}>toggle</button>
-      {show && <WorkerExample />}
+      {/* <button onClick={toggle}>toggle</button>
+      {show && <WorkerExample />} */}
       {/* <WebSocket /> */}
+      <SharedWorkerExample />
     </div>
   );
 }
