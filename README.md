@@ -13,7 +13,7 @@
 ```
 cd server
 pnpm install
-node server.js
+pnpm run start
 ```
 
 ### Component
