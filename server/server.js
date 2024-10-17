@@ -1,4 +1,4 @@
-let nameList = [
+const nameList = [
   "테슬라",
   "알파벳",
   "삼성전자",

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import useWebWorker from "../hooks/useWebWorker";
 
 const socketWorkerPath = "../workers/socket-worker.ts";
@@ -31,9 +31,9 @@ const WorkerExample = () => {
     return serverMsg;
   }, [message]);
 
-  const handleClick = () => {
-    sendMessage("알림 요청");
-  };
+  const handleClick = useCallback(() => {
+    sendMessage(`알림 요청: ${Date.now()}`);
+  }, [sendMessage]);
 
   useEffect(() => {
     if (message?.type === "DATA") {

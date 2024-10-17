@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Alarm } from "../types/alarm";
 import { SocketData } from "../types/socket-data";
 import useSharedWorker from "../hooks/useSharedWorker";
@@ -23,16 +23,16 @@ const SharedWorkerExample = () => {
     return serverMsg;
   }, [message]);
 
+  const handleClick = useCallback(() => {
+    sendMessage(`알림 요청: ${Date.now()}`);
+  }, [sendMessage]);
+
   useEffect(() => {
     if (message?.type === "DATA") {
       const alarm = message.data as Alarm;
       setAlarmList((prev) => [...prev, alarm]);
     }
   }, [message]);
-
-  const handleClick = () => {
-    sendMessage(`알림 요청: ${Date.now()}`);
-  };
 
   return (
     <div>
