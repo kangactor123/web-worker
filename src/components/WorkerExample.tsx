@@ -31,16 +31,16 @@ const WorkerExample = () => {
     return serverMsg;
   }, [message]);
 
+  const handleClick = () => {
+    sendMessage("알림 생성하기");
+  };
+
   useEffect(() => {
     if (message?.type === "DATA") {
       const alarm = message.data as Alarm;
       setAlarmList((prev) => [...prev, alarm]);
     }
   }, [message]);
-
-  const handleClick = () => {
-    sendMessage("알림 생성하기");
-  };
 
   return (
     <div>
