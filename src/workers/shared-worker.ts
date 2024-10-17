@@ -1,5 +1,5 @@
 // WeafRef
-// tsconfig의 lib에 ESNEXT 추가
+// tsconfig의 lib에 ESNext를 추가
 
 // SharedWorker TypeScript
 // @types/sharedworker DevDependency로 설치
