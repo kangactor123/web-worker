@@ -1,4 +1,8 @@
 # Web Worker
+![shared](https://github.com/user-attachments/assets/4f1094ff-af52-4cd1-a63f-48ce58da99a3)
+<p>Toss Slash24의 N 개의 탭, 단 하나의 소켓 세션을 예제로 구현해본 레포지토리 입니다.</p>
+<p>글이 궁금하시다면 다음 링크를 통해 확인해주세요!</p>
+<p><a href="https://kangs-develop.tistory.com/58" target="_blank">SharedWorker에 WebSocket 얹어보기</a></p>
 
 ## Tech
 
