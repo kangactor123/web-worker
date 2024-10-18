@@ -4,21 +4,13 @@ import useWebWorker from "../hooks/useWebWorker";
 import AlarmComponent from "./Alarm";
 
 import styles from "./worker.module.css";
+
+import { Alarm } from "../types/alarm";
+import { SocketData } from "../types/socket-data";
+
 import { isEmpty } from "../utils/util";
 
 const socketWorkerPath = "../workers/socket-worker.ts";
-
-type Alarm = {
-  id: string;
-  name: string;
-  price: number;
-  updatedAt: string;
-};
-
-type SocketData = {
-  type: "MESSAGE" | "DATA";
-  data: unknown;
-};
 
 const WorkerExample = () => {
   const [alarmList, setAlarmList] = useState<Alarm[]>([]);
