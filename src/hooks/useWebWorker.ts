@@ -23,12 +23,6 @@ function useWebWorker<T>({ url, initialData }: Props<T>): Result<T> {
     }
   }, []);
 
-  const terminateWorker = useCallback(() => {
-    if (worker.current) {
-      worker.current.terminate();
-    }
-  }, []);
-
   useEffect(() => {
     worker.current = new Worker(new URL(url, import.meta.url));
 

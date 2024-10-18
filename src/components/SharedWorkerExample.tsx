@@ -3,7 +3,8 @@ import { Alarm } from "../types/alarm";
 import { SocketData } from "../types/socket-data";
 import useSharedWorker from "../hooks/useSharedWorker";
 
-import dayjs from "dayjs";
+import styles from "./shared-worker.module.css";
+import AlarmComponent from "./Alarm";
 
 const sharedWorkerPath = "../workers/shared-worker.ts";
 
@@ -35,26 +36,22 @@ const SharedWorkerExample = () => {
   };
 
   return (
-    <div>
-      <h1>Shared Worker with Web Socket</h1>
-      <h3>서버메세지</h3>
-      <p>{serverMessage ?? "서버에서 보낸 메세지가 존재하지 않습니다."}</p>
-      <button onClick={handleClick}>알람 보내기</button>
-      {loading ? (
-        <p>로딩중..</p>
-      ) : alarmList.length === 0 ? (
-        <p>알람이 존재하지 않습니다.</p>
-      ) : (
-        <ul>
-          {alarmList.map((alarm) => (
-            <li key={alarm.id}>
-              <h5>{alarm.name}</h5>
-              <div>{alarm.price.toLocaleString()}원</div>
-              <div>{dayjs(alarm.updatedAt).format("YYYY년 MM월 DD일")}</div>
-            </li>
-          ))}
-        </ul>
-      )}
+    <div className={styles.container}>
+      <h1 className={styles.title}>Shared Worker with Web Socket</h1>
+      <div className={styles.serverMessageWrapper}>
+        <h3>서버메세지</h3>
+        <p>{serverMessage ?? "서버에서 보낸 메세지가 존재하지 않습니다."}</p>
+        <button onClick={handleClick}>알람 보내기</button>
+      </div>
+      <div className={styles.alarmWrapper}>
+        {loading ? (
+          <p>로딩중..</p>
+        ) : alarmList.length === 0 ? (
+          <p>알람이 존재하지 않습니다.</p>
+        ) : (
+          alarmList.map((alarm) => <AlarmComponent key={alarm.id} {...alarm} />)
+        )}
+      </div>
     </div>
   );
 };

@@ -1,0 +1,26 @@
+.alarmContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.alarmName {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.alarmInfo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #454e5d;
+}
+
+.eclipse {
+  width: 2px;
+  height: 2px;
+  display: inline-block;
+  border-radius: 1px;
+  background-color: #a7afb9;
+}

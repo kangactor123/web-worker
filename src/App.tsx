@@ -1,14 +1,16 @@
-import WorkerExample from "./components/WorkerExample";
-
 // import WebSocket from "./components/WebSocketExample";
+
+// import WorkerExample from "./components/WorkerExample";
 import SharedWorkerExample from "./components/SharedWorkerExample";
+
+import "./app.css";
 
 function App() {
   return (
-    <div>
+    <div className="container">
+      <SharedWorkerExample />
       {/* <WebSocket /> */}
       {/* <WorkerExample /> */}
-      <SharedWorkerExample />
     </div>
   );
 }
