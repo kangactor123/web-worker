@@ -1,5 +1,10 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import useWebWorker from "../hooks/useWebWorker";
+
+import AlarmComponent from "./Alarm";
+
+import styles from "./worker.module.css";
+import { isEmpty } from "../utils/util";
 
 const socketWorkerPath = "../workers/socket-worker.ts";
 
@@ -31,9 +36,9 @@ const WorkerExample = () => {
     return serverMsg;
   }, [message]);
 
-  const handleClick = () => {
-    sendMessage("알림 요청");
-  };
+  const handleClick = useCallback(() => {
+    sendMessage(`알림 요청: ${Date.now()}`);
+  }, [sendMessage]);
 
   useEffect(() => {
     if (message?.type === "DATA") {
@@ -43,26 +48,22 @@ const WorkerExample = () => {
   }, [message]);
 
   return (
-    <div>
-      <h1>Web Worker</h1>
-      <h3>서버메세지</h3>
-      <p>{serverMessage ?? "서버에서 보낸 메세지가 존재하지 않습니다."}</p>
-      <button onClick={handleClick}>알람 보내기</button>
-      {loading ? (
-        <p>로딩중..</p>
-      ) : alarmList.length === 0 ? (
-        <p>알람이 존재하지 않습니다.</p>
-      ) : (
-        <ul>
-          {alarmList.map((alarm) => (
-            <li key={alarm.id}>
-              <h5>{alarm.name}</h5>
-              <div>{alarm.price}</div>
-              <div>{alarm.updatedAt}</div>
-            </li>
-          ))}
-        </ul>
-      )}
+    <div className={styles.container}>
+      <h1 className={styles.title}>Dedicated Worker</h1>
+      <div className={styles.serverMessageWrapper}>
+        <h3>서버메세지</h3>
+        <p>{serverMessage ?? "서버에서 보낸 메세지가 존재하지 않습니다."}</p>
+        <button onClick={handleClick}>알람 보내기</button>
+      </div>
+      <div className={styles.alarmWrapper}>
+        {loading ? (
+          <p>로딩중..</p>
+        ) : isEmpty(alarmList) ? (
+          <p>알람이 존재하지 않습니다.</p>
+        ) : (
+          alarmList.map((alarm) => <AlarmComponent key={alarm.id} {...alarm} />)
+        )}
+      </div>
     </div>
   );
 };

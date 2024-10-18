@@ -9,8 +9,8 @@ function App() {
   return (
     <div className="container">
       <SharedWorkerExample />
-      {/* <WebSocket /> */}
       {/* <WorkerExample /> */}
+      {/* <WebSocket /> */}
     </div>
   );
 }

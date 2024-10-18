@@ -1,10 +1,13 @@
-import { useEffect, useMemo, useState } from "react";
-import { Alarm } from "../types/alarm";
-import { SocketData } from "../types/socket-data";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import useSharedWorker from "../hooks/useSharedWorker";
 
-import styles from "./shared-worker.module.css";
 import AlarmComponent from "./Alarm";
+
+import { Alarm } from "../types/alarm";
+import { SocketData } from "../types/socket-data";
+
+import styles from "./worker.module.css";
+import { isEmpty } from "../utils/util";
 
 const sharedWorkerPath = "../workers/shared-worker.ts";
 
@@ -13,6 +16,10 @@ const SharedWorkerExample = () => {
   const { message, loading, sendMessage } = useSharedWorker<SocketData>({
     url: sharedWorkerPath,
   });
+
+  const handleClick = useCallback(() => {
+    sendMessage(`알림 요청: ${Date.now()}`);
+  }, [sendMessage]);
 
   const serverMessage: string | null = useMemo(() => {
     let serverMsg = null;
@@ -31,10 +38,6 @@ const SharedWorkerExample = () => {
     }
   }, [message]);
 
-  const handleClick = () => {
-    sendMessage(`알림 요청: ${Date.now()}`);
-  };
-
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Shared Worker with Web Socket</h1>
@@ -46,7 +49,7 @@ const SharedWorkerExample = () => {
       <div className={styles.alarmWrapper}>
         {loading ? (
           <p>로딩중..</p>
-        ) : alarmList.length === 0 ? (
+        ) : isEmpty(alarmList) ? (
           <p>알람이 존재하지 않습니다.</p>
         ) : (
           alarmList.map((alarm) => <AlarmComponent key={alarm.id} {...alarm} />)
