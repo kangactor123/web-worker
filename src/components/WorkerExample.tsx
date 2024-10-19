@@ -3,12 +3,13 @@ import useWebWorker from "../hooks/useWebWorker";
 
 import AlarmComponent from "./Alarm";
 
-import styles from "./worker.module.css";
-
 import { Alarm } from "../types/alarm";
 import { SocketData } from "../types/socket-data";
 
 import { isEmpty } from "../utils/util";
+
+import styles from "./worker.module.css";
+import { MessageType } from "../constants/constant";
 
 const socketWorkerPath = "../workers/socket-worker.ts";
 
@@ -21,7 +22,7 @@ const WorkerExample = () => {
   const serverMessage: string | null = useMemo(() => {
     let serverMsg = null;
 
-    if (message?.type === "MESSAGE") {
+    if (message?.type === MessageType.MESSAGE) {
       serverMsg = (message?.data as string) ?? null;
     }
 
@@ -33,7 +34,7 @@ const WorkerExample = () => {
   }, [sendMessage]);
 
   useEffect(() => {
-    if (message?.type === "DATA") {
+    if (message?.type === MessageType.DATA) {
       const alarm = message.data as Alarm;
       setAlarmList((prev) => [...prev, alarm]);
     }
@@ -41,7 +42,7 @@ const WorkerExample = () => {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Dedicated Worker</h1>
+      <h1 className={styles.title}>DedicatedWorker</h1>
       <div className={styles.serverMessageWrapper}>
         <h3>서버메세지</h3>
         <p>{serverMessage ?? "서버에서 보낸 메세지가 존재하지 않습니다."}</p>

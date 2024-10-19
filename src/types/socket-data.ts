@@ -1,4 +1,5 @@
+export type DataType = "MESSAGE" | "DATA";
 export type SocketData = {
-  type: "MESSAGE" | "DATA";
+  type: DataType;
   data: unknown;
 };

@@ -1,4 +1,4 @@
-let connections: WeakRef<MessagePort>[] = [];
+const connections: WeakRef<MessagePort>[] = [];
 const socket: WebSocket = new WebSocket("ws://localhost:8080");
 
 self.onconnect = (event) => {

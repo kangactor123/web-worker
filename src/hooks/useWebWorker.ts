@@ -32,7 +32,7 @@ function useWebWorker<T>({ url, initialData }: Props<T>): Result<T> {
 
       try {
         messageData = JSON.parse(data);
-      } catch (error) {
+      } catch {
         messageData = data;
       }
 

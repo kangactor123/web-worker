@@ -6,8 +6,10 @@ import AlarmComponent from "./Alarm";
 import { Alarm } from "../types/alarm";
 import { SocketData } from "../types/socket-data";
 
-import styles from "./worker.module.css";
 import { isEmpty } from "../utils/util";
+import { MessageType } from "../constants/constant";
+
+import styles from "./worker.module.css";
 
 const sharedWorkerPath = "../workers/shared-worker.ts";
 
@@ -24,7 +26,7 @@ const SharedWorkerExample = () => {
   const serverMessage: string | null = useMemo(() => {
     let serverMsg = null;
 
-    if (message?.type === "MESSAGE") {
+    if (message?.type === MessageType.MESSAGE) {
       serverMsg = (message?.data as string) ?? null;
     }
 
@@ -32,7 +34,7 @@ const SharedWorkerExample = () => {
   }, [message]);
 
   useEffect(() => {
-    if (message?.type === "DATA") {
+    if (message?.type === MessageType.DATA) {
       const alarm = message.data as Alarm;
       setAlarmList((prev) => [...prev, alarm]);
     }
@@ -40,7 +42,7 @@ const SharedWorkerExample = () => {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Shared Worker with Web Socket</h1>
+      <h1 className={styles.title}>SharedWorker</h1>
       <div className={styles.serverMessageWrapper}>
         <h3>서버메세지</h3>
         <p>{serverMessage ?? "서버에서 보낸 메세지가 존재하지 않습니다."}</p>
